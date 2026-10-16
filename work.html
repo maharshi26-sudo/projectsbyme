@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f0f9ff, #cbebff);
+            color: #333;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            background: #40abc1;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            background: #555;
+            border-radius: 4px;
+        }
+
+       h1 {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 30px 0;
+    color: #222;
+    background: linear-gradient(90deg, #40abc1, #64d6a8);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    letter-spacing: 2px;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+        .image-container {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 10px;
+        }
+
+        .close, .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .close {
+            top: 20px;
+            right: 30px;
+            transform: none;
+            font-size: 35px;
+        }
+
+        .prev { left: 30px; }
+        .next { right: 30px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="file:///C:/Users/Mahar/OneDrive/Desktop/somthing%20new/project1.html">Home</a>
+        <a href="file:///C:/Users/Mahar/OneDrive/Desktop/somthing%20new/About.html">About</a>
+        <a href="file:///C:/Users/Mahar/OneDrive/Desktop/somthing%20new/work.html">Work</a>
+    </nav>
+
+    <h1>Click Any Image to Full View</h1>
+
+    <div class="image-container">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260919-WA0021.jpg" alt="Image 1">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20261005-WA0002.jpg" alt="Image 2">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260919-WA0010.jpg" alt="Image 3">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260924-WA0020.jpg" alt="Image 4">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260924-WA0021.jpg" alt="Image 5">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260924-WA0033.jpg" alt="Image 6">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260924-WA0026.jpg" alt="Image 7">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260924-WA0032.jpg" alt="Image 8">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/file_00000000b2b48211b977db92f0339f28.png" alt="Image 9">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260924-WA0023.jpg" alt="Image 10">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260930-WA0006.jpg" alt="Image 11">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260917-WA0019.jpg" alt="Image 12">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260921-WA0005.jpg" alt="Image 13">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260921-WA0003.jpg" alt="Image 14">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260927-WA0014.jpg" alt="Image 15">
+        <img src="C:/Users/Mahar/Downloads/Mobile Devices/IMG-20260928-WA0005.jpg" alt="Image 16">
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="close" onclick="closeLightbox()">&times;</span>
+        <span class="prev" onclick="changeImage(-1)">&#10094;</span>
+        <img id="lightbox-img" src="">
+        <span class="next" onclick="changeImage(1)">&#10095;</span>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('.image-container img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        let currentIndex = 0;
+
+        images.forEach((img, index) => {
+            img.addEventListener('click', () => {
+                currentIndex = index;
+                showImage();
+            });
+        });
+
+        function showImage() {
+            lightbox.style.display = 'flex';
+            lightboxImg.src = images[currentIndex].src;
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        function changeImage(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = images.length - 1;
+            if (currentIndex >= images.length) currentIndex = 0;
+            showImage();
+        }
+    </script>
+</body>
+</html>
